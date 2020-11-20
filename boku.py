@@ -6,8 +6,6 @@ def start_board(size):
   new_row = []
   row_elements =  5
   flag = True         # flag pra saber se ele ta antes ou depois da metade do tabuleiro
-  row = size - 5
-  row = row*2+1      # a linha do meio do tabuleiro mais as linhas de cima e de baixo
   
   while row_elements >= 5:  
     if row_elements < size and flag:
