@@ -27,8 +27,6 @@ def print_board(board):
   for i in board:
       print(i)
 
-  return 0
-
 
 tabuleiro = start_board(10)
 print_board(tabuleiro)
