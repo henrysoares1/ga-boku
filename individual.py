@@ -38,9 +38,76 @@ class Individual:
             word = word.center(self.size*2)    
             word += "\n"
             board += word    
-
+            
         return board
 
+    # coloca a peca de um determinado jogador no tabuleiro
+    def player_move(self, player):
+        while True:
+            row_move = int(input("Qual linha? "))
+            column_move = int(input("Qual coluna? "))
+            # if que verifica se esta no tamanho certo de linas, tamanho certo da coluna naquela linha, se a posicao esta vazia e se o jogador nao esta colocando no mesmo lugar
+            if len(self.chromosome)-1 >= row_move and len(self.chromosome[row_move])-1 >= column_move and self.chromosome[row_move][column_move] == 0 and not self.chromosome[row_move][column_move] == player:
+                self.chromosome[row_move][column_move] = player
+                return self.chromosome
+            else: 
+                print("Você não pode jogar ai. Tente de novo.")
+    
+    # verifica se o jogador ganhou
+    def win(self):
+        flag = 1
+        for i in range(0,len(self.chromosome)-1):
+            for j in range(0,len(self.chromosome[i])):
+                if not self.chromosome[i][j] == 0:
+                    if self.win_horizontal(self.chromosome,i,j,flag) or self.win_left_diagonal(self.chromosome,i,j,flag) or self.win_right_diagonal(self.chromosome,i,j,flag):
+                        print("Jogo acabou")
+                        return True
+
+        return False
+
+    # verifica se o jogador ganhou na horizontal
+    def win_horizontal(self, board, x, y, flag):
+        player = board[x][y]
+        row_size = len(board[x])-1
+        if row_size >= y+1:
+            if board[x][y+1] == player:
+                flag += 1
+            if flag == 5:
+                return True
+            else:
+                return  self.win_horizontal(board,x,y+1,flag)
+
+        return False
+
+    def win_left_diagonal(self, board, x, y, flag):
+        player = board[x][y]
+        board_size = len(board[x])-1
+        if board_size >= x+1:
+            row_size = len(board[x+1])-1
+            if row_size >= y:
+                if board[x+1][y] == player:
+                    flag += 1
+                    if flag == 5:
+                        return True
+                    else:
+                        return self.win_left_diagonal(board,x+1,y,flag)
+        
+        return False
+
+    def win_right_diagonal(self, board, x, y, flag):
+        player = board[x][y]
+        board_size = len(board[x])-1
+        if board_size >= x+1:
+            row_size = len(board[x+1])-1
+            if row_size >= y+1:
+                if board[x+1][y+1] == player:
+                    flag += 1
+                    if flag == 5:
+                        return True
+                    else:
+                        return self.win_right_diagonal(board,x+1,y+1,flag)
+        
+        return False
 
     def fitness(self):
         pass
