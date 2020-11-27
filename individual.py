@@ -10,5 +10,17 @@ class Individual:
 
         return chromo
 
-    def fitness(self):
+    def get_chromosome(self):
+        return self.chromosome
+
+    def get_fitness(self):
         pass
+
+    def set_fitness(self):
+        pass
+
+
+if __name__ == "__main__":
+    individuo = Individual(10,8)
+
+    print(individuo.get_chromosome())
