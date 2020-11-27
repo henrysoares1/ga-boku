@@ -10,6 +10,5 @@ class Individual:
 
         return chromo
 
-
     def fitness(self):
         pass
