@@ -1,6 +1,8 @@
+from board_game import GameBoard
 from individual import Individual
+from board_game import GameBoard
 
-tabuleiro = Individual(12)
+tabuleiro = GameBoard(12)
 print(tabuleiro)
 tabuleiro.player_move(1)
 tabuleiro.win()
