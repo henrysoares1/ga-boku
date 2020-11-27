@@ -72,40 +72,59 @@ class Individual:
         if row_size >= y+1:
             if board[x][y+1] == player:
                 flag += 1
-            if flag == 5:
-                return True
-            else:
-                return  self.win_horizontal(board,x,y+1,flag)
+                if flag == 5:
+                    return True
+                else:
+                    return  self.win_horizontal(board,x,y+1,flag)
 
         return False
 
     def win_left_diagonal(self, board, x, y, flag):
         player = board[x][y]
-        board_size = len(board[x])-1
+        middle_row = (len(board)-1)/2  # pega o indice da linha do meio
+        board_size = len(board)-1 # isso retorna quantas colunas aquela linha tem
         if board_size >= x+1:
             row_size = len(board[x+1])-1
             if row_size >= y:
-                if board[x+1][y] == player:
-                    flag += 1
-                    if flag == 5:
-                        return True
-                    else:
-                        return self.win_left_diagonal(board,x+1,y,flag)
+                if x < middle_row:
+                    if board[x+1][y] == player:
+                        flag += 1
+                        if flag == 5:
+                            return True
+                        else:
+                            return self.win_left_diagonal(board,x+1,y,flag)
+                else:
+                    if board[x+1][y-1] == player:
+                        flag += 1
+                        if flag == 5:
+                            return True
+                        else:
+                            return self.win_left_diagonal(board,x+1,y-1,flag)
         
         return False
 
     def win_right_diagonal(self, board, x, y, flag):
         player = board[x][y]
-        board_size = len(board[x])-1
+        middle_row = (len(board)-1)/2  # pega o indice da linha do meio
+        board_size = len(board)-1
         if board_size >= x+1:
             row_size = len(board[x+1])-1
-            if row_size >= y+1:
-                if board[x+1][y+1] == player:
-                    flag += 1
-                    if flag == 5:
-                        return True
-                    else:
-                        return self.win_right_diagonal(board,x+1,y+1,flag)
+            if x < middle_row:    
+                if row_size >= y+1:
+                    if board[x+1][y+1] == player:
+                        flag += 1
+                        if flag == 5:
+                            return True
+                        else:
+                            return self.win_right_diagonal(board,x+1,y+1,flag)
+            else:
+                if row_size >= y:
+                    if board[x+1][y] == player:
+                        flag += 1
+                        if flag == 5:
+                            return True
+                        else:
+                            return self.win_right_diagonal(board,x+1,y,flag)
         
         return False
 
