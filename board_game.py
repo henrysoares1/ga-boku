@@ -30,7 +30,7 @@ class GameBoard:
     def __str__(self):
         board = ""
 
-        for row in self.chromosome:
+        for row in self.game_board:
             word = ""
             for pos in row:
                 word += "{0} ".format(pos)
@@ -46,19 +46,19 @@ class GameBoard:
             row_move = int(input("Qual linha? "))
             column_move = int(input("Qual coluna? "))
             # if que verifica se esta no tamanho certo de linas, tamanho certo da coluna naquela linha, se a posicao esta vazia e se o jogador nao esta colocando no mesmo lugar
-            if len(self.chromosome)-1 >= row_move and len(self.chromosome[row_move])-1 >= column_move and self.chromosome[row_move][column_move] == 0 and not self.chromosome[row_move][column_move] == player:
-                self.chromosome[row_move][column_move] = player
-                return self.chromosome
+            if len(self.game_board)-1 >= row_move and len(self.game_board[row_move])-1 >= column_move and self.game_board[row_move][column_move] == 0 and not self.game_board[row_move][column_move] == player:
+                self.game_board[row_move][column_move] = player
+                return self.game_board
             else: 
                 print("Você não pode jogar ai. Tente de novo.")
     
     # verifica se o jogador ganhou
     def win(self):
         flag = 1
-        for i in range(0,len(self.chromosome)-1):
-            for j in range(0,len(self.chromosome[i])):
-                if not self.chromosome[i][j] == 0:
-                    if self.win_horizontal(self.chromosome,i,j,flag) or self.win_left_diagonal(self.chromosome,i,j,flag) or self.win_right_diagonal(self.chromosome,i,j,flag):
+        for i in range(0,len(self.game_board)-1):
+            for j in range(0,len(self.game_board[i])):
+                if not self.game_board[i][j] == 0:
+                    if self.win_horizontal(self.game_board,i,j,flag) or self.win_left_diagonal(self.game_board,i,j,flag) or self.win_right_diagonal(self.game_board,i,j,flag):
                         print("Jogo acabou")
                         return True
 
