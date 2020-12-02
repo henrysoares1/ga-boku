@@ -2,6 +2,7 @@
 class Individual:
     def __init__(self, x: int, y: int):
         self.chromosome = self.__compose_chromosome(x,y)
+        self.fitness = 0
 
     def __compose_chromosome(self, x: int, y: int):
         chromo = y
@@ -23,10 +24,10 @@ class Individual:
         return self.chromosome
 
     def get_fitness(self):
-        pass
+        return self.fitness
 
-    def set_fitness(self):
-        pass
+    def set_fitness(self, fitness):
+        self.fitness = fitness
 
 
 if __name__ == "__main__":
