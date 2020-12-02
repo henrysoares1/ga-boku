@@ -78,7 +78,10 @@ class Population:
         return flag
 
 
-    def diagonal_principal(self, board, x, y, player):
+    def diagonal_principal(self, tabuleiro, individual, player):
+
+        board = tabuleiro.game_board
+        x, y = individual.get_coordinates()
 
         if board[y][x] != 0:
             return -1

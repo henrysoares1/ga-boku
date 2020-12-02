@@ -24,7 +24,7 @@ print(tabuleiro)
 
 ind = Individual(2, 11)
 
-print(_population.diagonal_principal(tabuleiro.game_board, 2,11,1))
+print(_population.diagonal_principal(tabuleiro, ind,1))
 
 #population = ga.create_pop(10)
 
