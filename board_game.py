@@ -41,13 +41,11 @@ class GameBoard:
         return board
 
     # coloca a peca de um determinado jogador no tabuleiro
-    def player_move(self, player):
+    def player_move(self, player, x, y):
         while True:
-            row_move = int(input("Qual linha? "))
-            column_move = int(input("Qual coluna? "))
-            # if que verifica se esta no tamanho certo de linas, tamanho certo da coluna naquela linha, se a posicao esta vazia e se o jogador nao esta colocando no mesmo lugar
-            if len(self.game_board)-1 >= row_move and len(self.game_board[row_move])-1 >= column_move and self.game_board[row_move][column_move] == 0 and not self.game_board[row_move][column_move] == player:
-                self.game_board[row_move][column_move] = player
+            # if que verifica se esta no tamanho certo de linhas, tamanho certo da coluna naquela linha, se a posicao esta vazia e se o jogador nao esta colocando no mesmo lugar
+            if len(self.game_board)-1 >= y and len(self.game_board[y])-1 >= x and self.game_board[y][x] == 0 and not self.game_board[y][x] == player:
+                self.game_board[y][x] = player
                 return self.game_board
             else: 
                 print("Você não pode jogar ai. Tente de novo.")
