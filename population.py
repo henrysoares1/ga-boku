@@ -22,12 +22,10 @@ class Population:
         board = tabuleiro.game_board
         x, y = individual.get_coordinates()
 
-        if y < 0 or y > len(board)-1 or x < 0 or x > len(board[y])-1 or board[y][x] != 0:
-            return -1
-
         fitness = self.__horizontal_esquerda(board, x, y, player) + self.__horizontal_direita(board, x, y, player)
 
         return fitness
+
 
     def __horizontal_esquerda(self, board, x, y, player):
         count_equal = 0
@@ -43,6 +41,7 @@ class Population:
                 count_equal += 1
 
         return count_equal
+
 
     def __horizontal_direita(self, board, x, y, player):
         count_equal = 0
@@ -63,9 +62,6 @@ class Population:
     def diagonal_secundaria(self, tabuleiro, individual, player):
         board = tabuleiro.game_board
         x, y = individual.get_coordinates()
-
-        if y < 0 or y > len(board)-1 or x < 0 or x > len(board[y])-1 or board[y][x] != 0:
-            return -1
 
         fitness = self.__diagonal_secundaria_cima(board, x, y, player) + self.__diagonal_secundaria_baixo(board, x, y, player)
 
@@ -125,9 +121,6 @@ class Population:
         board = tabuleiro.game_board
         x, y = individual.get_coordinates()
 
-        if y < 0 or y > len(board)-1 or x < 0 or x > len(board[y])-1 or board[y][x] != 0:
-            return -1
-
         fitness = self.__diagonal_principal_cima(board, x, y, player) + self.__diagonal_principal_baixo(board, x, y, player)
 
         return fitness
@@ -182,25 +175,14 @@ class Population:
 
 
     def fitness(self, board, individual, player):
+        _board = board.game_board
         x, y = individual.get_coordinates()
-        temp_board = board.game_board.copy()
-        fitness = 0
-        if len(board.game_board)-1 >= y and len(board.game_board[y])-1 >= x and board.game_board[y][x] == 0: #verifica se jogada é valida
-            temp_board[y][x] = player
-            flag = 1
-            for i in range(0,len(temp_board)-1):
-                for j in range(0,len(temp_board[i])):
-                    if not temp_board[i][j] == 0:
-                        left = self.left_diagonal(temp_board, i, j, flag, player)
-                        right = self.right_diagonal(temp_board, i, j, flag, player)
-                        horizontal = self.horizontal(temp_board, i, j, flag, player)
-                        total = max(left, right, horizontal)
-                        fitness = total if total > fitness else fitness
 
-            return fitness
+        if y < 0 or y > len(_board)-1 or x < 0 or x > len(_board[y])-1 or _board[y][x] != 0:
+            return -1
 
-        else:
-            print(x, y)
-            fitness = -1 #posição inválida = fitness -1
-            return fitness
-        #individual.set_fitness(fitness)
+        horizontal_fit = self.horizontal(board, individual, player)
+        dp_fit = self.diagonal_principal(board, individual, player)
+        ds_fit = self.diagonal_secundaria(board, individual, player)
+
+        return horizontal_fit + dp_fit + ds_fit
