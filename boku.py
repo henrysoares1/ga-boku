@@ -4,7 +4,7 @@ from population import Population
 from genetic_algorithm import GeneticAlgorithm
 
 _popultaion = Population()
-tabuleiro = GameBoard(14)
+tabuleiro = GameBoard()
 
 tabuleiro.player_move(1, 0, 0)
 tabuleiro.player_move(1, 1, 0)

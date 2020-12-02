@@ -1,6 +1,6 @@
 class GameBoard:
-    def __init__(self, size):
-        self.size =  size
+    def __init__(self):
+        self.size =  15
         self.game_board = self.__create_board()
 
     def __create_board(self):
