@@ -18,64 +18,64 @@ class Population:
         return pop
 
 
-    def left_diagonal(self, board, x, y, flag, player):
-        middle_row = (len(board)-1)/2  # pega o indice da linha do meio
-        board_size = len(board)-1 # isso retorna quantas colunas aquela linha tem - SÓ QUE NÃO
-        if board_size >= x+1:
-            row_size = len(board[x+1])-1
-            if row_size >= y:
-                if x < middle_row:
-                    if board[x+1][y] == player:
-                        flag += 1
-                        if flag == 5:
-                            return 100
-                        else:
-                            return self.left_diagonal(board, x+1, y, flag, player)
-                else:
-                    if board[x+1][y-1] == player:
-                        flag += 1
-                        if flag == 5:
-                            return 100
-                        else:
-                            return self.left_diagonal(board, x+1, y-1, flag, player)
+    def diagonal_secundaria(self, tabuleiro, individual, player):
+        board = tabuleiro.game_board
+        x, y = individual.get_coordinates()
+
+        if y < 0 or y > len(board)-1 or x < 0 or x > len(board[y])-1 or board[y][x] != 0:
+            return -1
+
+        fitness = self.__diagonal_secundaria_cima(board, x, y, player) + self.__diagonal_secundaria_baixo(board, x, y, player)
+
+        return fitness
+
+
+    def __diagonal_secundaria_cima(self, board, x, y, player):
+        mid_line = (len(board)-1)/2
+        count_equal = 0
+        diagonal_queue = []
+
+        diagonal_queue.append((x,y))
+
+        while diagonal_queue:
+            _x, _y = diagonal_queue.pop(0)
+
+            if _y <= mid_line:
+                if _y-1 >= 0 and _x < len(board[_y-1]):
+                    if board[_y-1][_x] == player:
+                        diagonal_queue.append((_x,_y-1))
+                        count_equal += 1
             
-        return flag
-
-    def right_diagonal(self, board, x, y, flag, player):
-        middle_row = (len(board)-1)/2
-        board_size = len(board)-1
-        if board_size >= x+1:
-            row_size = len(board[x+1])-1
-            if x < middle_row:    
-                if row_size >= y+1:
-                    if board[x+1][y+1] == player:
-                        flag += 1
-                        if flag == 5:
-                            return 100
-                        else:
-                            return self.right_diagonal(board, x+1, y+1, flag, player)
             else:
-                if row_size >= y:
-                    if board[x+1][y] == player:
-                        flag += 1
-                        if flag == 5:
-                            return 100
-                        else:
-                            return self.right_diagonal(board, x+1, y, flag, player)
-        
-        return flag
+                if board[_y-1][_x+1] == player:
+                    diagonal_queue.append((_x+1,_y-1))
+                    count_equal += 1
 
-    def horizontal(self, board, x, y, flag, player):
-        row_size = len(board[x])-1
-        if row_size >= y+1:
-            if board[x][y+1] == player:
-                flag += 1
-                if flag == 5:
-                    return 100
-                else:
-                    return self.horizontal(board, x, y+1, flag, player)
+        return count_equal
 
-        return flag
+
+    def __diagonal_secundaria_baixo(self, board, x, y, player):
+        mid_line = (len(board)-1)/2
+        count_equal = 0
+        diagonal_queue = []
+
+        diagonal_queue.append((x,y))
+
+        while diagonal_queue:
+            _x, _y = diagonal_queue.pop(0)
+
+            if _y < mid_line:
+                if board[_y+1][_x] == player:
+                    diagonal_queue.append((_x,_y+1))
+                    count_equal += 1
+            
+            else:
+                if _y+1 < len(board) and _x >= 0:
+                    if board[_y+1][_x-1] == player:
+                        diagonal_queue.append((_x+1,_y-1))
+                        count_equal += 1
+
+        return count_equal
 
 
     def diagonal_principal(self, tabuleiro, individual, player):
@@ -89,30 +89,6 @@ class Population:
         fitness = self.__diagonal_principal_cima(board, x, y, player) + self.__diagonal_principal_baixo(board, x, y, player)
 
         return fitness
-
-
-    def __diagonal_principal_baixo(self, board, x, y, player):
-        mid_line = (len(board)-1)/2
-        count_equal = 0
-        diagonal_queue = []
-
-        diagonal_queue.append((x,y))
-
-        while diagonal_queue:
-            _x, _y = diagonal_queue.pop(0)
-
-            if _y < mid_line:
-                if board[_y+1][_x+1] == player:
-                    diagonal_queue.append((_x+1,_y+1))
-                    count_equal += 1
-            else:
-                if _y+1 < len(board) and _x < len(board[_y+1]):
-                    if board[_y+1][_x] == player:
-                        diagonal_queue.append((_x,_y+1))
-                        count_equal += 1
-            
-
-        return count_equal
 
 
     def __diagonal_principal_cima(self, board, x, y, player):
@@ -135,6 +111,30 @@ class Population:
                     diagonal_queue.append((_x,_y-1))
                     count_equal += 1
 
+
+        return count_equal
+
+
+    def __diagonal_principal_baixo(self, board, x, y, player):
+        mid_line = (len(board)-1)/2
+        count_equal = 0
+        diagonal_queue = []
+
+        diagonal_queue.append((x,y))
+
+        while diagonal_queue:
+            _x, _y = diagonal_queue.pop(0)
+
+            if _y < mid_line:
+                if board[_y+1][_x+1] == player:
+                    diagonal_queue.append((_x+1,_y+1))
+                    count_equal += 1
+            else:
+                if _y+1 < len(board) and _x < len(board[_y+1]):
+                    if board[_y+1][_x] == player:
+                        diagonal_queue.append((_x,_y+1))
+                        count_equal += 1
+            
 
         return count_equal
 
