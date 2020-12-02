@@ -18,6 +18,48 @@ class Population:
         return pop
 
 
+    def horizontal(self, tabuleiro, individual, player):
+        board = tabuleiro.game_board
+        x, y = individual.get_coordinates()
+
+        if y < 0 or y > len(board)-1 or x < 0 or x > len(board[y])-1 or board[y][x] != 0:
+            return -1
+
+        fitness = self.__horizontal_esquerda(board, x, y, player) + self.__horizontal_direita(board, x, y, player)
+
+        return fitness
+
+    def __horizontal_esquerda(self, board, x, y, player):
+        count_equal = 0
+        queue = []
+
+        queue.append((x,y))
+
+        while queue:
+            _x, _y = queue.pop(0)
+
+            if _x-1 > 0 and board[_y][_x-1] == player:
+                queue.append((_x-1,_y))
+                count_equal += 1
+
+        return count_equal
+
+    def __horizontal_direita(self, board, x, y, player):
+        count_equal = 0
+        queue = []
+
+        queue.append((x,y))
+
+        while queue:
+            _x, _y = queue.pop(0)
+
+            if _x+1 < len(board[_y]) and board[_y][_x+1] == player:
+                queue.append((_x+1,_y))
+                count_equal += 1
+
+        return count_equal
+
+
     def diagonal_secundaria(self, tabuleiro, individual, player):
         board = tabuleiro.game_board
         x, y = individual.get_coordinates()
