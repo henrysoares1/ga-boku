@@ -72,7 +72,7 @@ class GameBoard:
                 if flag == 5:
                     return True
                 else:
-                    return  self.win_horizontal(board,x,y+1,flag)
+                    return self.win_horizontal(board,x,y+1,flag)
 
         return False
 
