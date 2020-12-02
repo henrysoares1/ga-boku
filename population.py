@@ -77,12 +77,68 @@ class Population:
 
         return flag
 
+
     def diagonal_principal(self, board, x, y, player):
-        mid_line = 
+
+        if board[y][x] != 0:
+            return -1
+
+        fitness = self.__diagonal_principal_cima(board, x, y, player) + self.__diagonal_principal_baixo(board, x, y, player)
+
+        return fitness
+
+
+    def __diagonal_principal_baixo(self, board, x, y, player):
+        mid_line = (len(board)-1)/2
+        count_equal = 0
+        diagonal_queue = []
+
+        diagonal_queue.append((x,y))
+
+        while diagonal_queue:
+            _x, _y = diagonal_queue.pop(0)
+
+            if _y < mid_line:
+                if board[_y+1][_x+1] == player:
+                    diagonal_queue.append((_x+1,_y+1))
+                    count_equal += 1
+            else:
+                if _y+1 < len(board) and _x < len(board[_y+1]):
+                    if board[_y+1][_x] == player:
+                        diagonal_queue.append((_x,_y+1))
+                        count_equal += 1
+            
+
+        return count_equal
+
+
+    def __diagonal_principal_cima(self, board, x, y, player):
+        mid_line = (len(board)-1)/2
+        count_equal = 0
+        diagonal_queue = []
+
+        diagonal_queue.append((x,y))
+
+        while diagonal_queue:
+            _x, _y = diagonal_queue.pop(0)
+
+            if _y <= mid_line:
+                if _y-1 >= 0 and _x - 1 >=0:
+                    if board[_y-1][_x-1] == player:
+                        diagonal_queue.append((_x-1,_y-1))
+                        count_equal += 1
+            else:
+                if board[_y-1][_x] == player:
+                    diagonal_queue.append((_x,_y-1))
+                    count_equal += 1
+
+
+        return count_equal
+
 
     def fitness(self, board, individual, player):
         x, y = individual.get_coordinates()
-        temp_board = board.game_board[:]
+        temp_board = board.game_board.copy()
         fitness = 0
         if len(board.game_board)-1 >= y and len(board.game_board[y])-1 >= x and board.game_board[y][x] == 0: #verifica se jogada é valida
             temp_board[y][x] = player
