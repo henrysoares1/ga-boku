@@ -181,8 +181,14 @@ class Population:
         if y < 0 or y > len(_board)-1 or x < 0 or x > len(_board[y])-1 or _board[y][x] != 0:
             return -1
 
+        enemy = 2 if player == 1 else 1
+
         horizontal_fit = self.horizontal(board, individual, player)
         dp_fit = self.diagonal_principal(board, individual, player)
         ds_fit = self.diagonal_secundaria(board, individual, player)
+
+        ct_horiz_fit = self.horizontal(board, individual, enemy)
+        ct_dp_fit = self.diagonal_principal(board, individual, enemy)
+        ct_ds_fit = self.diagonal_secundaria(board, individual, enemy)
 
         return horizontal_fit + dp_fit + ds_fit
