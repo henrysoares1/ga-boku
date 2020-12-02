@@ -20,7 +20,7 @@ class Population:
 
     def left_diagonal(self, board, x, y, flag, player):
         middle_row = (len(board)-1)/2  # pega o indice da linha do meio
-        board_size = len(board)-1 # isso retorna quantas colunas aquela linha tem
+        board_size = len(board)-1 # isso retorna quantas colunas aquela linha tem - SÓ QUE NÃO
         if board_size >= x+1:
             row_size = len(board[x+1])-1
             if row_size >= y:
@@ -77,9 +77,12 @@ class Population:
 
         return flag
 
+    def diagonal_principal(self, board, x, y, player):
+        mid_line = 
+
     def fitness(self, board, individual, player):
         x, y = individual.get_coordinates()
-        temp_board = board.game_board
+        temp_board = board.game_board[:]
         fitness = 0
         if len(board.game_board)-1 >= y and len(board.game_board[y])-1 >= x and board.game_board[y][x] == 0: #verifica se jogada é valida
             temp_board[y][x] = player
