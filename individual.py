@@ -6,19 +6,19 @@ class Individual:
 
     def __compose_chromosome(self, x: int, y: int):
         chromo = y
-        chromo <<= 4
+        chromo <<= 5
         chromo |= x
 
         return chromo
 
     def get_coordinates(self):
-        val = 15
+        val = 31
         x = self.chromosome & val
-        val <<= 4
+        val <<= 5
         y = self.chromosome & val
-        y >>= 4
+        y >>= 5
 
-        return (x,y)
+        return (x, y)
 
     def get_chromosome(self):
         return self.chromosome
