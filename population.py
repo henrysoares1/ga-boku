@@ -83,7 +83,7 @@ class Population:
         board = tabuleiro.game_board
         x, y = individual.get_coordinates()
 
-        if board[y][x] != 0:
+        if y < 0 or y > len(board)-1 or x < 0 or x > len(board[y])-1 or board[y][x] != 0:
             return -1
 
         fitness = self.__diagonal_principal_cima(board, x, y, player) + self.__diagonal_principal_baixo(board, x, y, player)
