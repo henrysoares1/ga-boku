@@ -1,3 +1,4 @@
+from typing import Sequence
 from individual import Individual
 import random
 
@@ -108,9 +109,9 @@ class Population:
                     count_equal += 1
             
             else:
-                if _y+1 < len(board) and _x >= 0:
+                if _y+1 < len(board) and _x-1 >= 0:
                     if board[_y+1][_x-1] == player:
-                        diagonal_queue.append((_x+1,_y-1))
+                        diagonal_queue.append((_x-1,_y+1))
                         count_equal += 1
 
         return count_equal
@@ -172,6 +173,134 @@ class Population:
             
 
         return count_equal
+
+
+    def __sandwich_dp_cima(self, board, x, y, player, enemy):
+        mid_line = (len(board)-1)/2
+        sandwich_queue = []
+        sequence_queue = []
+        count = 0
+
+        sandwich_queue.append((x,y))
+
+        while sandwich_queue or count < 3:
+            _x, _y = sandwich_queue.pop(0)
+
+            if _y <= mid_line:
+                if _y-1 >= 0 and _x-1 >= 0 and board[_y-1][_x-1] != 0:
+                    count += 1
+                    sandwich_queue.append((_x-1,_y-1))
+                    if board[_y-1][_x-1] == player:
+                        sequence_queue.append(player)
+                    else:
+                        sequence_queue.append(enemy)
+            else:
+                if board[_y-1][_x] != 0:
+                    count += 1
+                    sandwich_queue.append((_x,_y-1))
+                    if board[_y-1][_x] == player:
+                        sequence_queue.append(player)
+                    else:
+                        sequence_queue.append(enemy)
+
+        return sequence_queue
+
+
+    def __sandwich_dp_baixo(self, board, x, y, player, enemy):
+        mid_line = (len(board)-1)/2
+        sandwich_queue = []
+        sequence_queue = []
+        count = 0
+
+        sandwich_queue.append((x,y))
+
+        while sandwich_queue or count < 3:
+            _x, _y = sandwich_queue.pop(0)
+
+            if _y < mid_line:
+                if board[_y+1][_x+1] != 0:
+                    count += 1
+                    sandwich_queue.append((_x-1,_y-1))
+                    if board[_y-1][_x-1] == player:
+                        sequence_queue.append(player)
+                    else:
+                        sequence_queue.append(enemy)
+            else:
+                if _y+1 < len(board) and _x < len(board[_y+1]) and board[_y+1][_x] != 0:
+                    count += 1
+                    sandwich_queue.append((_x,_y+1))
+                    if board[_y+1][_x] == player:
+                        sequence_queue.append(player)
+                    else:
+                        sequence_queue.append(enemy)
+
+        return sequence_queue
+
+
+    def __sandwich_ds_cima(self, board, x, y, player, enemy):
+        mid_line = (len(board)-1)/2
+        sandwich_queue = []
+        sequence_queue = []
+        count = 0
+
+        sandwich_queue.append((x,y))
+
+        while sandwich_queue or count < 3:
+            _x, _y = sandwich_queue.pop(0)
+
+            if _y <= mid_line:
+                if _y-1 >= 0 and _x < len(board[_y-1]) and board[_y-1][_x] != 0:
+                    count += 1
+                    sandwich_queue.append((_x,_y-1))
+                    if board[_y-1][_x] == player:
+                        sequence_queue.append(player)
+                    else:
+                        sequence_queue.append(enemy)
+            else:
+                if board[_y-1][_x+1] != 0:
+                    count += 1
+                    sandwich_queue.append((_x+1,_y-1))
+                    if board[_y-1][_x+1] == player:
+                        sequence_queue.append(player)
+                    else:
+                        sequence_queue.append(enemy)
+
+        return sequence_queue
+
+
+    def __sandwich_ds_baixo(self, board, x, y, player, enemy):
+        mid_line = (len(board)-1)/2
+        sandwich_queue = []
+        sequence_queue = []
+        count = 0
+
+        sandwich_queue.append((x,y))
+
+        while sandwich_queue or count < 3:
+            _x, _y = sandwich_queue.pop(0)
+
+            if _y < mid_line:
+                if board[_y+1][_x] != 0:
+                    count += 1
+                    sandwich_queue.append((_x,_y+1))
+                    if board[_y+1][_x] == player:
+                        sequence_queue.append(player)
+                    else:
+                        sequence_queue.append(enemy)
+            else:
+                if _y+1 < len(board) and _x-1 >= 0 and board[_y+1][_x-1] != 0:
+                    count += 1
+                    sandwich_queue.append((_x-1,_y+1))
+                    if board[_y+1][_x-1] == player:
+                        sequence_queue.append(player)
+                    else:
+                        sequence_queue.append(enemy)
+
+        return sequence_queue
+
+
+    def sandwich(self, board, individual, player):
+        pass
 
 
     def fitness(self, board, individual, player):
