@@ -183,7 +183,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 3:
+        while sandwich_queue or count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _y <= mid_line:
@@ -214,7 +214,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 3:
+        while sandwich_queue or count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _y < mid_line:
@@ -245,7 +245,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 3:
+        while sandwich_queue or count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _y <= mid_line:
@@ -276,7 +276,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 3:
+        while sandwich_queue or count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _y < mid_line:
@@ -306,7 +306,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 3:
+        while sandwich_queue or count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _x-1 > 0 and board[_y][_x-1] != 0:
@@ -328,7 +328,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 3:
+        while sandwich_queue or count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _x+1 < len(board[_y]) and board[_y][_x+1] != 0:
@@ -343,8 +343,25 @@ class Population:
         return sequence_queue
 
 
-    def sandwich(self, board, individual, player):
-        pass
+    def sandwich(self, board, individual, player, enemy):
+        x, y = individual.get_coordinates()
+
+        seq_dp_cima = self.__sandwich_dp_cima(board, x, y, player, enemy)
+        seq_dp_baixo = self.__sandwich_dp_baixo(board, x, y, player, enemy)
+        seq_ds_cima = self.__sandwich_ds_cima(board, x, y, player, enemy)
+        seq_ds_baixo = self.__sandwich_ds_baixo(board, x, y, player, enemy)
+        seq_h_esq = self.__sandwich_h_esquerda(board, x, y, player, enemy)
+        seq_h_dir = self.__sandwich_h_direita(board, x, y, player, enemy)
+
+        all_sequence = [seq_dp_cima, seq_dp_baixo, seq_ds_cima, seq_ds_baixo, seq_h_esq, seq_h_dir]
+        counter = 0
+
+        for sequence in all_sequence:
+            if sequence and len(sequence) == 2:
+                if sequence[0] == enemy and sequence[1] == player:
+                    counter += 1
+
+        return counter
 
 
     def fitness(self, board, individual, player):
