@@ -299,6 +299,50 @@ class Population:
         return sequence_queue
 
 
+    def __sandwich_h_esquerda(self, board, x, y, player, enemy):
+        sandwich_queue = []
+        sequence_queue = []
+        count = 0
+
+        sandwich_queue.append((x,y))
+
+        while sandwich_queue or count < 3:
+            _x, _y = sandwich_queue.pop(0)
+
+            if _x-1 > 0 and board[_y][_x-1] != 0:
+                count += 1
+                sandwich_queue.append((_x-1,_y))
+
+                if board[_y][_x-1] == player:
+                    sequence_queue.append(player)
+                else:
+                    sequence_queue.append(enemy)
+
+        return sequence_queue
+
+
+    def __sandwich_h_direita(self, board, x, y, player, enemy):
+        sandwich_queue = []
+        sequence_queue = []
+        count = 0
+
+        sandwich_queue.append((x,y))
+
+        while sandwich_queue or count < 3:
+            _x, _y = sandwich_queue.pop(0)
+
+            if _x+1 < len(board[_y]) and board[_y][_x+1] != 0:
+                count += 1
+                sandwich_queue.append((_x+1,_y))
+
+                if board[_y][_x+1] == player:
+                    sequence_queue.append(player)
+                else:
+                    sequence_queue.append(enemy)
+
+        return sequence_queue
+
+
     def sandwich(self, board, individual, player):
         pass
 
