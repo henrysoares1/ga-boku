@@ -183,7 +183,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 2:
+        while sandwich_queue and count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _y <= mid_line:
@@ -214,7 +214,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 2:
+        while sandwich_queue and count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _y < mid_line:
@@ -245,7 +245,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 2:
+        while sandwich_queue and count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _y <= mid_line:
@@ -276,7 +276,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 2:
+        while sandwich_queue and count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _y < mid_line:
@@ -306,7 +306,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 2:
+        while sandwich_queue and count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _x-1 > 0 and board[_y][_x-1] != 0:
@@ -328,7 +328,7 @@ class Population:
 
         sandwich_queue.append((x,y))
 
-        while sandwich_queue or count < 2:
+        while sandwich_queue and count < 2:
             _x, _y = sandwich_queue.pop(0)
 
             if _x+1 < len(board[_y]) and board[_y][_x+1] != 0:
