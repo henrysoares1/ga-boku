@@ -1,26 +1,32 @@
 from board_game import GameBoard
 from individual import Individual
-from board_game import GameBoard
+from population import Population
 from genetic_algorithm import GeneticAlgorithm
 
-ga = GeneticAlgorithm()
-tabuleiro = GameBoard(14)
+tabuleiro = GameBoard()
+_population = Population(tabuleiro)
 
-tabuleiro.player_move(1, 0, 0)
-tabuleiro.player_move(1, 1, 0)
-tabuleiro.player_move(1, 2, 0)
-tabuleiro.player_move(1, 0, 1)
-tabuleiro.player_move(1, 0, 16)
-tabuleiro.player_move(1, 1, 16)
-tabuleiro.player_move(1, 0, 15)
-tabuleiro.player_move(1, 0, 14)
-tabuleiro.player_move(1, 1, 15)
-tabuleiro.player_move(1, 0, 17)
+tabuleiro.player_move(1, 12, 8)
+tabuleiro.player_move(1, 10, 8)
+tabuleiro.player_move(2, 12, 9)
+tabuleiro.player_move(2, 11, 9)
+
+tabuleiro.player_move(2, 11, 10)
+tabuleiro.player_move(1, 10, 10)
+tabuleiro.player_move(2, 13, 10)
+tabuleiro.player_move(1, 14, 10)
+
+tabuleiro.player_move(2, 11, 11)
+tabuleiro.player_move(1, 10, 12)
+
+tabuleiro.player_move(2, 12, 11)
+tabuleiro.player_move(1, 12, 12)
+
 print(tabuleiro)
 
-ind = Individual(0, 2)
+ind = Individual(12, 10)
 
-print(ga.fitness(tabuleiro, ind, 1))
+print(_population.sandwich(tabuleiro.game_board, ind, 1, 2))
 
 #population = ga.create_pop(10)
 
