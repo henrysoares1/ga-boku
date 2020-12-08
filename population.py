@@ -4,20 +4,21 @@ import random
 
 class Population:
     
-    def __init__(self, game_board):
-        self.size = 20
+    def __init__(self, size, game_board):
+        self.__size = size
+        self.__game_board = game_board
         self.population = self.init_population()
 
 
     def init_population(self):
         pop = []
-        for i in range(self.size):
-            x = random.randint(0, 15)
-            y = random.randint(0, 21)
+        for i in range(self.__size):
+            y = random.randint(0, len(self.__game_board)-1)
+            x = random.randint(0, len(self.__game_board[y])-1)
             pop.append(Individual(x, y))
 
         return pop
-
+        
 
     def horizontal(self, tabuleiro, individual, player):
         board = tabuleiro.game_board
@@ -381,4 +382,13 @@ class Population:
         ct_dp_fit = self.diagonal_principal(board, individual, enemy)
         ct_ds_fit = self.diagonal_secundaria(board, individual, enemy)
 
-        return horizontal_fit + dp_fit + ds_fit
+        fitness = horizontal_fit + dp_fit + ds_fit
+        ct_fitness = ct_dp_fit + ct_ds_fit + ct_horiz_fit
+
+        if ct_horiz_fit >= 3 or ct_dp_fit >= 3 or ct_ds_fit >= 3:
+            ct_fitness *= 10
+
+        if horizontal_fit == 4 or dp_fit == 4 or ds_fit == 4:
+            fitness *= 10
+
+        return fitness + ct_fitness

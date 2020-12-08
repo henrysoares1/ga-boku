@@ -23,6 +23,9 @@ class Individual:
     def get_chromosome(self):
         return self.chromosome
 
+    def set_chromosome(self, chromo):
+        self.chromosome = chromo
+
     def get_fitness(self):
         return self.fitness
 
