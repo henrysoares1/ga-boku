@@ -15,6 +15,10 @@ class GeneticAlgorithm:
         self.__no_growth_value = no_growth
 
     
+    def get_player_num(self):
+        return self.__player
+
+
     def getFittest(self):
         pop = Population(self.__size, self.__board.game_board)
         counter = 0
@@ -67,6 +71,8 @@ class GeneticAlgorithm:
             parents += children
             pop.population = parents
         
+        pop.population.sort(key=lambda x: x.get_fitness(), reverse=True)
+
         return pop.population[0]
 
 
