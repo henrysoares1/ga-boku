@@ -20,7 +20,7 @@ class Population:
         return pop
         
 
-    def horizontal(self, individual: Individual, player):
+    def __horizontal(self, individual: Individual, player):
         x, y = individual.get_coordinates()
 
         fitness = self.__horizontal_esquerda( x, y, player) + self.__horizontal_direita( x, y, player)
@@ -60,7 +60,7 @@ class Population:
         return count_equal
 
 
-    def diagonal_secundaria(self, individual: Individual, player):
+    def __diagonal_secundaria(self, individual: Individual, player):
         x, y = individual.get_coordinates()
 
         fitness = self.__diagonal_secundaria_cima( x, y, player) + self.__diagonal_secundaria_baixo( x, y, player)
@@ -116,7 +116,7 @@ class Population:
         return count_equal
 
 
-    def diagonal_principal(self, individual: Individual, player):
+    def __diagonal_principal(self, individual: Individual, player):
         x, y = individual.get_coordinates()
 
         fitness = self.__diagonal_principal_cima( x, y, player) + self.__diagonal_principal_baixo( x, y, player)
@@ -340,7 +340,7 @@ class Population:
         return sequence_queue
 
 
-    def sandwich(self, individual: Individual, player, enemy):
+    def __sandwich(self, individual: Individual, player, enemy):
         x, y = individual.get_coordinates()
 
         seq_dp_cima = self.__sandwich_dp_cima(x, y, player, enemy)
@@ -376,17 +376,17 @@ class Population:
 
         enemy = 2 if player == 1 else 1
 
-        horizontal_fit = self.horizontal(individual, player)
-        dp_fit = self.diagonal_principal(individual, player)
-        ds_fit = self.diagonal_secundaria(individual, player)
+        horizontal_fit = self.__horizontal(individual, player)
+        dp_fit = self.__diagonal_principal(individual, player)
+        ds_fit = self.__diagonal_secundaria(individual, player)
 
-        ct_horiz_fit = self.horizontal(individual, enemy)
-        ct_dp_fit = self.diagonal_principal(individual, enemy)
-        ct_ds_fit = self.diagonal_secundaria(individual, enemy)
+        ct_horiz_fit = self.__horizontal(individual, enemy)
+        ct_dp_fit = self.__diagonal_principal(individual, enemy)
+        ct_ds_fit = self.__diagonal_secundaria(individual, enemy)
 
         fitness = horizontal_fit + dp_fit + ds_fit
         ct_fitness = ct_dp_fit + ct_ds_fit + ct_horiz_fit
-        sandwich = self.sandwich(individual, player, enemy)
+        sandwich = self.__sandwich(individual, player, enemy)
 
         if ct_horiz_fit >= 3 or ct_dp_fit >= 3 or ct_ds_fit >= 3:
             ct_fitness *= 10
@@ -397,4 +397,4 @@ class Population:
         if sandwich > 0:
             sandwich *= 3
 
-        return fitness + ct_fitness +sandwich
+        return fitness + ct_fitness + sandwich
