@@ -11,6 +11,7 @@ player2 = GeneticAlgorithm(50, tabuleiro, 2, 0.2, 0.1, 0.05, 30)
 
 while True:
     # Player 1
+    print("\nPlayer ", player1.get_player_num(), " move:\n")
     player1_move = player1.getFittest()
 
     player1_x, player1_y = player1_move.get_coordinates()
@@ -21,12 +22,14 @@ while True:
     if player1_move.get_is_sandwich():
         remove_x, remove_y = player1_move.get_sandwiched_enemy()
         tabuleiro.remove_piece_at(remove_x, remove_y)
+        print("\nPlayer ", player1.get_player_num(), " sanduichou o ", player2.get_player_num(), ":\n")
         print(tabuleiro)
 
     if tabuleiro.win():
         break
 
     # Player 2
+    print("\nPlayer ", player2.get_player_num(), " move:\n")
     player2_move = player2.getFittest()
 
     player2_x, player2_y = player2_move.get_coordinates()
@@ -37,6 +40,7 @@ while True:
     if player2_move.get_is_sandwich():
         remove_x, remove_y = player2_move.get_sandwiched_enemy()
         tabuleiro.remove_piece_at(remove_x, remove_y)
+        print("\nPlayer ", player2.get_player_num(), " sanduichou o ", player1.get_player_num(), ":\n")
         print(tabuleiro)
 
     if tabuleiro.win():
