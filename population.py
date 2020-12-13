@@ -397,4 +397,4 @@ class Population:
         if sandwich > 0:
             sandwich *= 3
 
-        return fitness + ct_fitness
+        return fitness + ct_fitness +sandwich
