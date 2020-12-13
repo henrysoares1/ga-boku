@@ -54,14 +54,14 @@ class GeneticAlgorithm:
                     male = parents[index1]
                     female = parents[index2]
 
-                    son1, son2 = self.cross_over(male, female)
+                    son1, son2 = self.__cross_over(male, female)
 
                     children.append(son1)
                     children.append(son2)
 
             for individual in children:
                 if random.random() < self.__mutation_rate:
-                    self.mutation(individual)
+                    self.__mutation(individual)
 
 
             parents += children
@@ -70,7 +70,7 @@ class GeneticAlgorithm:
         return pop.population[0]
 
 
-    def mutation(self, individual: Individual):
+    def __mutation(self, individual: Individual):
         index = random.randint(0,9)
         
         chromo = individual.get_chromosome()
@@ -80,7 +80,7 @@ class GeneticAlgorithm:
         individual.set_chromosome(chromo)
 
 
-    def cross_over(self, male, female):
+    def __cross_over(self, male, female):
         male_chromo = male.get_chromosome()
         female_chromo = female.get_chromosome()
 
