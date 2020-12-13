@@ -22,7 +22,7 @@ class GeneticAlgorithm:
 
         while True:
             for individual in pop.population:
-                individual.set_fitness(pop.fitness(self.__board, individual, self.__player))
+                individual.set_fitness(pop.fitness(individual, self.__player))
 
             pop.population.sort(key=lambda x: x.get_fitness(), reverse=True)
 
