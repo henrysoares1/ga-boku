@@ -15,6 +15,10 @@ class GeneticAlgorithm:
         self.__no_growth_value = no_growth
 
     
+    def get_player_num(self):
+        return self.__player
+
+
     def getFittest(self):
         pop = Population(self.__size, self.__board.game_board)
         counter = 0
@@ -22,7 +26,7 @@ class GeneticAlgorithm:
 
         while True:
             for individual in pop.population:
-                individual.set_fitness(pop.fitness(self.__board, individual, self.__player))
+                individual.set_fitness(pop.fitness(individual, self.__player))
 
             pop.population.sort(key=lambda x: x.get_fitness(), reverse=True)
 
@@ -54,23 +58,25 @@ class GeneticAlgorithm:
                     male = parents[index1]
                     female = parents[index2]
 
-                    son1, son2 = self.cross_over(male, female)
+                    son1, son2 = self.__cross_over(male, female)
 
                     children.append(son1)
                     children.append(son2)
 
             for individual in children:
                 if random.random() < self.__mutation_rate:
-                    self.mutation(individual)
+                    self.__mutation(individual)
 
 
             parents += children
             pop.population = parents
         
+        pop.population.sort(key=lambda x: x.get_fitness(), reverse=True)
+
         return pop.population[0]
 
 
-    def mutation(self, individual: Individual):
+    def __mutation(self, individual: Individual):
         index = random.randint(0,9)
         
         chromo = individual.get_chromosome()
@@ -80,7 +86,7 @@ class GeneticAlgorithm:
         individual.set_chromosome(chromo)
 
 
-    def cross_over(self, male, female):
+    def __cross_over(self, male, female):
         male_chromo = male.get_chromosome()
         female_chromo = female.get_chromosome()
 

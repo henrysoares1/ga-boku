@@ -1,3 +1,4 @@
+import random
 
 class Individual:
     def __init__(self, x: int, y: int):
@@ -15,8 +16,10 @@ class Individual:
     def add_sandwiched_enemies(self, x: int, y: int):
         self.__sandwich_coords.append((x,y))
 
-    def get_sandwiched_enemies(self):
-        return self.__sandwich_coords
+    def get_sandwiched_enemy(self):
+        index = random.randint(0, len(self.__sandwich_coords)-1) if len(self.__sandwich_coords) > 1 else 0
+    
+        return self.__sandwich_coords[index]
 
     def __compose_chromosome(self, x: int, y: int):
         chromo = y

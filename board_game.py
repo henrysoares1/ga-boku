@@ -26,6 +26,8 @@ class GameBoard:
 
         return board
 
+    def remove_piece_at(self, x: int, y: int):
+        self.game_board[y][x] = 0
 
     def __str__(self):
         board = ""
@@ -42,13 +44,7 @@ class GameBoard:
 
     # coloca a peca de um determinado jogador no tabuleiro
     def player_move(self, player, x, y):
-        while True:
-            # if que verifica se esta no tamanho certo de linhas, tamanho certo da coluna naquela linha, se a posicao esta vazia e se o jogador nao esta colocando no mesmo lugar
-            if len(self.game_board)-1 >= y and len(self.game_board[y])-1 >= x and self.game_board[y][x] == 0 and not self.game_board[y][x] == player:
-                self.game_board[y][x] = player
-                return self.game_board
-            else: 
-                print("Você não pode jogar ai. Tente de novo.")
+        self.game_board[y][x] = player
     
     # verifica se o jogador ganhou
     def win(self):
@@ -57,7 +53,6 @@ class GameBoard:
             for j in range(0,len(self.game_board[i])):
                 if not self.game_board[i][j] == 0:
                     if self.win_horizontal(self.game_board,i,j,flag) or self.win_left_diagonal(self.game_board,i,j,flag) or self.win_right_diagonal(self.game_board,i,j,flag):
-                        print("Jogo acabou")
                         return True
 
         return False
