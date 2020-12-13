@@ -368,30 +368,33 @@ class Population:
         return counter
 
 
-    def fitness(self, board, individual, player):
-        _board = board.game_board
+    def fitness(self, individual: Individual, player):
         x, y = individual.get_coordinates()
 
-        if y < 0 or y > len(_board)-1 or x < 0 or x > len(_board[y])-1 or _board[y][x] != 0:
+        if y < 0 or y > len(self.__game_board)-1 or x < 0 or x > len(self.__game_board[y])-1 or self.__game_board[y][x] != 0:
             return -1
 
         enemy = 2 if player == 1 else 1
 
-        horizontal_fit = self.horizontal(board, individual, player)
-        dp_fit = self.diagonal_principal(board, individual, player)
-        ds_fit = self.diagonal_secundaria(board, individual, player)
+        horizontal_fit = self.horizontal(individual, player)
+        dp_fit = self.diagonal_principal(individual, player)
+        ds_fit = self.diagonal_secundaria(individual, player)
 
-        ct_horiz_fit = self.horizontal(board, individual, enemy)
-        ct_dp_fit = self.diagonal_principal(board, individual, enemy)
-        ct_ds_fit = self.diagonal_secundaria(board, individual, enemy)
+        ct_horiz_fit = self.horizontal(individual, enemy)
+        ct_dp_fit = self.diagonal_principal(individual, enemy)
+        ct_ds_fit = self.diagonal_secundaria(individual, enemy)
 
         fitness = horizontal_fit + dp_fit + ds_fit
         ct_fitness = ct_dp_fit + ct_ds_fit + ct_horiz_fit
+        sandwich = self.sandwich(individual, player, enemy)
 
         if ct_horiz_fit >= 3 or ct_dp_fit >= 3 or ct_ds_fit >= 3:
             ct_fitness *= 10
 
         if horizontal_fit == 4 or dp_fit == 4 or ds_fit == 4:
             fitness *= 10
+
+        if sandwich > 0:
+            sandwich *= 3
 
         return fitness + ct_fitness
