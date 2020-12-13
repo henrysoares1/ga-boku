@@ -33,6 +33,11 @@ print(_population.sandwich(tabuleiro.game_board, ind, 1, 2))
 print(tabuleiro)
 
 fittest = ga.getFittest()
+x, y = fittest.get_coordinates()
+
+tabuleiro.player_move(1, x, y)
+
+print(tabuleiro)
 
 print(fittest.get_fitness(), "\n")
 print(fittest.get_coordinates(), "\n")
