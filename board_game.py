@@ -26,6 +26,8 @@ class GameBoard:
 
         return board
 
+    def remove_piece_at(self, x: int, y: int):
+        self.game_board[y][x] = 0
 
     def __str__(self):
         board = ""
