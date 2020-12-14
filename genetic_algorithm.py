@@ -24,7 +24,7 @@ class GeneticAlgorithm:
         return self.__player
 
 
-    def getFittest(self):
+    def get_fittest(self):
         pop = Population(self.__size, self.__board.game_board, self.__invalid_pos)
         counter = 0
         best = pop.population[0]
