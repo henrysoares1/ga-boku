@@ -393,7 +393,7 @@ class Population:
             ct_fitness *= 10
 
         if horizontal_fit == 4 or dp_fit == 4 or ds_fit == 4:
-            fitness *= 10
+            fitness *= 100
 
         if sandwich > 0:
             sandwich *= 3
