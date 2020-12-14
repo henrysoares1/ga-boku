@@ -13,6 +13,11 @@ class GeneticAlgorithm:
         self.__mutation_rate = mutation
         self.__diversity_rate = diversity
         self.__no_growth_value = no_growth
+        self.__invalid_pos = []
+
+    
+    def add_invalid_pos(self, x: int, y: int):
+        self.__invalid_pos.append((x,y))
 
     
     def get_player_num(self):
@@ -20,7 +25,7 @@ class GeneticAlgorithm:
 
 
     def getFittest(self):
-        pop = Population(self.__size, self.__board.game_board)
+        pop = Population(self.__size, self.__board.game_board, self.__invalid_pos)
         counter = 0
         best = pop.population[0]
 

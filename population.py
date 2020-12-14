@@ -4,9 +4,10 @@ import random
 
 class Population:
     
-    def __init__(self, size, game_board):
+    def __init__(self, size, game_board, invalid_pos):
         self.__size = size
         self.__game_board = game_board
+        self.__invalid_pos = invalid_pos
         self.population = self.init_population()
 
 
@@ -371,7 +372,7 @@ class Population:
     def fitness(self, individual: Individual, player):
         x, y = individual.get_coordinates()
 
-        if y < 0 or y > len(self.__game_board)-1 or x < 0 or x > len(self.__game_board[y])-1 or self.__game_board[y][x] != 0:
+        if y < 0 or y > len(self.__game_board)-1 or x < 0 or x > len(self.__game_board[y])-1 or self.__game_board[y][x] != 0 or (x,y) in self.__invalid_pos:
             return -1
 
         enemy = 2 if player == 1 else 1
