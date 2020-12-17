@@ -28,8 +28,11 @@ class GeneticAlgorithm:
         pop = Population(self.__size, self.__board.game_board, self.__invalid_pos)
         counter = 0
         best = pop.population[0]
+        generations_counter = 0
 
         while True:
+            generations_counter += 1
+
             for individual in pop.population:
                 individual.set_fitness(pop.fitness(individual, self.__player))
 
@@ -47,15 +50,16 @@ class GeneticAlgorithm:
             index = int(len(pop.population) * self.__retention_rate)
 
             parents = pop.population[:index]
+            next_gen = pop.population[:index]
         
             for individual in pop.population[index:]:
 
-                if random.random() < self.__diversity_rate:
+                if individual.get_fitness() > -1 and random.random() < self.__diversity_rate:
                     parents.append(individual)
 
             children = []
 
-            while len(parents)+len(children) < self.__size:
+            while len(next_gen)+len(children) < self.__size:
                 index1 = random.randint(0, len(parents)-1)
                 index2 = random.randint(0, len(parents)-1)
 
@@ -73,10 +77,12 @@ class GeneticAlgorithm:
                     self.__mutation(individual)
 
 
-            parents += children
-            pop.population = parents
+            next_gen += children
+            pop.population = next_gen
         
         pop.population.sort(key=lambda x: x.get_fitness(), reverse=True)
+
+        print("Player ", self.__player, " total generations = ", generations_counter, "\n")
 
         return pop.population[0]
 
